@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1616920550 source:c:\users\kay\desktop\cs1107\assignments\assignment6\ass6q1\main.c
+	<stdio.h>
+	<stdlib.h>
+
