@@ -38,18 +38,18 @@ int main()
     char prefix[SIZE];
     BTNode* root=NULL;
 
-    //printf("Enter an prefix expression:\n");
+    printf("Enter an prefix expression:\n");
     gets(prefix);
 
     createExpTree(&root, prefix);
 
-    // printf("The Infix Expression:\n");
+    printf("The Infix Expression:\n");
     printTree(root);
     printf("\n");
-    //printf("The Postfix (Reverse Polish) Expression:\n");
+    printf("The Postfix (Reverse Polish) Expression:\n");
     printTreePostfix(root);
     printf("\n");
-    //printf("Answer ");
+    printf("Answer ");
     printf("%.2f\n", computeTree(root));
     deleteTree(&root);
     return 0;

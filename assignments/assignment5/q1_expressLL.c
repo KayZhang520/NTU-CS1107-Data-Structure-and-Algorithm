@@ -51,68 +51,29 @@ int main()
 
 void expressionLL(char* infix, LinkedList *inExpLL)
 {
-    //Write your code here
-    //reverse the string first
-    int count, i;
-    count = 0;
-    char revInfix[50];
-	while(infix[count]!='\0')count++;
-	for(i=count-1;i>=0;i--)
-		revInfix[count-1-i] = infix[i];
-   	revInfix[count]='\0';
+    int len, i, savedNum, multiplier
+    len = 0; savedNum = 0;
+    multiplier = 1; 
 
+	while(infix[len]!='\0')len++;
+	len--;
 
-    char *ptr = revInfix;
-    char numarr[20];
-    int index = 0;
-    int isoperandlast = 0;
+    while(len != -1){
+        char c = infix[len];
+        enum ExpType charType = (c=='+'||c=='-'||c=='*'||c=='/'||c=='('||c==')') ? OPT : OPERAND;
 
-
-    while(*ptr!='\0'){
-        char c = *ptr;
-        enum ExpType mytype = (c=='+'||c=='-'||c=='*'||c=='/'||c=='('||c==')') ? OPT : OPERAND;
-
-        if(mytype == OPT){
-			if(index!=0){
-				numarr[index] = '\0';
-				char revnumarr[20];
-				int i, j;
-				j=index;
-
-				j--;
-				for(i = 0; i<index; i++){
-					revnumarr[i] = numarr[j];
-					j--;
-				}
-				revnumarr[index]='\0';
-				int myint = atoi(revnumarr);
-				insertNode(inExpLL, myint, OPERAND);
-			}
-			insertNode(inExpLL, c, mytype);
-			index = 0;
-			numarr[0]='\0';
+        if(charType == OPT){
+			if(savedNum != 0)insertNode(inExpLL, savedNum, OPERAND);
+			insertNode(inExpLL, c, OPT);
+			multiplier = 1;
+			savedNum = 0;
         }
         else{
-			numarr[index] = c;
-			index++;
+			savedNum += (c - '0')*multiplier;
+			multiplier *= 10;
+			if(len == 0)insertNode(inExpLL, savedNum, OPERAND);
         }
-        ptr++;
-    }
-
-    if(numarr[0]!='\0'){
-				numarr[index] = '\0';
-				char revnumarr[20];
-				int i, j;
-				j=index;
-
-				j--;
-				for(i = 0; i<index; i++){
-					revnumarr[i] = numarr[j];
-					j--;
-				}
-				revnumarr[index]='\0';
-				int myint = atoi(revnumarr);
-				insertNode(inExpLL, myint, OPERAND);
+        len--;
     }
 }
 
